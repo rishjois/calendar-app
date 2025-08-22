@@ -1,0 +1,61 @@
+.space-header {
+  width: 100%;
+  margin: 0;
+  padding: 2rem 0 2rem 0;
+  background: linear-gradient(120deg, #0f2027 0%, #2c5364 100%);
+  color: #7fdfff;
+  text-align: center;
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.15em;
+  position: relative;
+  box-shadow: 0 4px 24px 0 rgba(44, 83, 100, 0.3);
+  overflow: hidden;
+  text-shadow: 0 0 8px #7fdfff, 0 0 24px #0ff;
+  font-weight: 700;
+  z-index: 1;
+  border: none;
+}
+
+.space-header::before, .space-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.space-header::before {
+  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0, transparent 60%),
+              radial-gradient(circle at 80% 60%, rgba(255,255,255,0.06) 0, transparent 70%),
+              radial-gradient(circle at 50% 80%, rgba(255,255,255,0.04) 0, transparent 80%);
+}
+
+.space-header::after {
+  background-image: repeating-radial-gradient(circle, #fff 0 1px, transparent 1px 100px);
+  opacity: 0.08;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.split-container {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+app-sidebar-component {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+app-task-manager-component {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: auto;
+}

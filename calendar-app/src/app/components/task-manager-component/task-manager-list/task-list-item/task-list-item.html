@@ -1,0 +1,31 @@
+<div class="task-row"
+     role="treeitem"
+     [attr.aria-level]="depth() + 1"
+     [attr.aria-expanded]="hasChildren() ? expanded() : null"
+     [style.paddingInlineStart.px]="depth() * 16"
+     [class.completed]="task().completed">
+
+  @if (hasChildren()) {
+    <button class="twisty" type="button" (click)="toggle()"
+            [attr.aria-label]="expanded() ? 'Collapse' : 'Expand'">
+      {{ expanded() ? '▾' : '▸' }}
+    </button>
+  } @else {
+    <span class="twisty tw-empty" aria-hidden="true"></span>
+  }
+
+  <input type="checkbox"
+         [checked]="task().completed"
+         (change)="onCompletedChange($event)" />
+
+  <span class="title">{{ task().title }}</span>
+  @if (task().deadline) { <span class="deadline"> {{ task().deadline }}</span> }
+</div>
+
+@if (expanded() && hasChildren()) {
+  <div role="group">
+    @for (child of task().subtasks!; track child.id) {
+      <app-task-list-item [task]="child" [depth]="depth() + 1"></app-task-list-item>
+    }
+  </div>
+}

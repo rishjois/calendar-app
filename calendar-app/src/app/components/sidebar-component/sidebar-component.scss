@@ -1,0 +1,33 @@
+.sidebar {
+    background-color: grey;
+    height: 100%;
+}
+
+.standardGap {
+    height: 40px;
+}
+
+.userProfile {
+    // Circle
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    // Initials inside
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.taskManager, .calendar {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
