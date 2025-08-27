@@ -1,5 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { Task } from '../../../models/TaskList';
+import { Component, inject } from '@angular/core';
 import { TaskManagerService } from '../../../services/task-manager';
 import { TaskListItem } from "./task-list-item/task-list-item";
 
@@ -9,12 +8,16 @@ import { TaskListItem } from "./task-list-item/task-list-item";
   templateUrl: './task-manager-list.html',
   styleUrl: './task-manager-list.scss'
 })
-export class TaskManagerList implements OnInit {
+export class TaskManagerList {
 
-  taskData = signal<Task[]>([]);
   taskManagerService = inject(TaskManagerService);
+  taskData = this.taskManagerService.taskManagerItems;
 
-  ngOnInit(): void {
-    this.taskData.set(this.taskManagerService.taskManagerItems);
+  addTask() {
+    const title = prompt('Task title');
+    if (title) {
+      const deadline = prompt('Task deadline (optional, YYYY-MM-DD)') || '';
+      this.taskManagerService.addTask(title, deadline);
+    }
   }
 }

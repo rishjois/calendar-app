@@ -32,4 +32,14 @@
     text-decoration: line-through;
     opacity: 0.6;
   }
+
+  .actions {
+    margin-left: auto;
+    display: flex;
+    gap: 4px;
+  }
+
+  .actions button {
+    padding: 2px 6px;
+  }
   

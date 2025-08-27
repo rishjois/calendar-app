@@ -1,3 +1,4 @@
+<button type="button" (click)="addTask()">Create Task</button>
 <div class="task-list" role="tree" aria-label="Tasks">
     @for (t of taskData(); track t.id) {
       <app-task-list-item [task]="t" [depth]="0"></app-task-list-item>
