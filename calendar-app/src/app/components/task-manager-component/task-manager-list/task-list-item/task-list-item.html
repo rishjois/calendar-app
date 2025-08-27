@@ -20,10 +20,10 @@
 
   <span class="title">{{ task().title }}</span>
   @if (task().deadline) { <span class="deadline"> {{ task().deadline }}</span> }
-  <span class="actions">
-    <button type="button" (click)="modifyTask()">Modify</button>
-    <button type="button" (click)="deleteTask()">Delete</button>
-  </span>
+    <span class="actions">
+      <button type="button" class="modify" (click)="modifyTask()">Modify</button>
+      <button type="button" class="delete" (click)="deleteTask()">Delete</button>
+    </span>
 </div>
 
 @if (expanded() && hasChildren()) {
@@ -33,3 +33,4 @@
     }
   </div>
 }
+
