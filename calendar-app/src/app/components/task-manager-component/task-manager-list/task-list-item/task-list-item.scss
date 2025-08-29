@@ -1,35 +1,71 @@
 :host {
-    display: block;
-    --indent-step: 16px; /* Tweak globally if you like */
-  }
-  
-  .task-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 32px;
-  }
-  
-  .twisty {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 14px;
-    width: 20px;
-    line-height: 1;
-    padding: 0;
-  }
-  
-  .tw-empty {
-    width: 20px; /* keeps titles aligned with/without chevrons */
-    display: inline-block;
-  }
-  
-  .title { font-weight: 500; }
-  .deadline { margin-left: 6px; font-size: 12px; opacity: 0.7; }
-  
-  .completed .title {
-    text-decoration: line-through;
-    opacity: 0.6;
-  }
-  
+  display: block;
+  --indent-step: 16px;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.task-row:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.twisty {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  width: 20px;
+  line-height: 1;
+  padding: 0;
+}
+
+.tw-empty {
+  width: 20px;
+  display: inline-block;
+}
+
+.title {
+  font-weight: 500;
+}
+
+.deadline {
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.completed .title {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.actions button {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.actions button.delete {
+  color: #ff3b30;
+}
+
+.actions button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

@@ -1,20 +1,45 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Task } from '../models/TaskList';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskManagerService {
-  taskManagerItems: Array<Task> = [];
+  taskManagerItems = signal<Task[]>([]);
+  private nextId = 1;
   user: string = "";
+
   constructor() { }
 
   updateItems(jsonValue: any) {
-    this.taskManagerItems = this.transformTaskJsonToTasks(jsonValue);
+    const tasks = this.transformTaskJsonToTasks(jsonValue);
+    this.taskManagerItems.set(tasks);
+    this.nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
   }
 
   updateUser(userInput: string) {
     this.user = userInput;
+  }
+
+  addTask(title: string, deadline: string = '') {
+    const newTask: Task = {
+      id: this.nextId++,
+      title,
+      deadline,
+      completed: false,
+      subtasks: []
+    };
+    this.taskManagerItems.update(tasks => [...tasks, newTask]);
+  }
+
+  modifyTask(id: number, updates: Partial<Task>) {
+    this.taskManagerItems.update(tasks =>
+      tasks.map(t => (t.id === id ? { ...t, ...updates } : t))
+    );
+  }
+
+  deleteTask(id: number) {
+    this.taskManagerItems.update(tasks => tasks.filter(t => t.id !== id));
   }
 
   transformTaskJsonToTasks(json: any): Task[] {

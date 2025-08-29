@@ -1,17 +1,9 @@
 <div class="sidebar">
-    <div class="standardGap"></div>
-
-    <div class="userProfile">{{user_initials()}}</div>
-    
-    <div class="standardGap"></div>
-
-    <div class="taskManager" routerLink="/taskmanager">
-        <img src="\assets\TaskManagerIcon.png" style="width: 64px; height: 64px;" />
-    </div>
-
-    <div class="standardGap"></div>
-
-    <div class="calendar">
-        <img src="\assets\CalendarIcon.png" style="width: 64px; height: 64px;" />
-    </div>
+  <div class="user-profile">{{ user_initials() }}</div>
+  <div class="nav-button" routerLink="/taskmanager">
+    <img src="assets/TaskManagerIcon.png" width="32" height="32" alt="Task Manager" />
+  </div>
+  <div class="nav-button" routerLink="/calendar">
+    <img src="assets/CalendarIcon.png" width="32" height="32" alt="Calendar" />
+  </div>
 </div>
