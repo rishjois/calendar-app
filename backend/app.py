@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Fo
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 
 # TODO: replace placeholders with actual database credentials
-DATABASE_URL = "mysql+pymysql://<username>:<password>@<host>:<port>/<database>"
+DATABASE_URL = "mysql+pymysql://root:test_root@localhost:3306/calendar"
 
 engine = create_engine(DATABASE_URL, echo=True, future=True)
 SessionLocal = sessionmaker(bind=engine)
@@ -29,7 +29,7 @@ class Task(Base):
     deleted = Column(Boolean, default=False)
 
     user = relationship("User", back_populates="tasks")
-    subtasks = relationship("Task", backref="parent", remote_side=[id])
+    parent_tasks = relationship("Task", backref="parent", remote_side=[id])
 
 def task_to_dict(task):
     return {
@@ -54,7 +54,7 @@ def build_task_tree(session, user_id):
 
 app = Flask(__name__)
 
-@app.get("/api/users/<int:user_id>")
+@app.route("/api/users/<int:user_id>", methods=["GET"])
 def get_user_and_tasks(user_id):
     session = SessionLocal()
     user = session.get(User, user_id)

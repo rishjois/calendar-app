@@ -1,5 +1,6 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TaskManagerService } from '../../services/task-manager';
 
 @Component({
   selector: 'app-sidebar-component',
@@ -8,7 +9,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sidebar-component.scss'
 })
 export class SidebarComponent {
-  user = input<string>("");
+
+  taskManagerService = inject(TaskManagerService);
+  user = this.taskManagerService.user;
 
   user_initials = computed(() => this.getInitials(this.user()));
 

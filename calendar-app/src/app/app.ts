@@ -17,6 +17,6 @@ export class App implements OnInit {
   taskManagerService = inject(TaskManagerService);
 
   ngOnInit(): void {
-    this.taskManagerService.loadUserAndTasks(1); // TODO: replace 1 with the logged-in user's ID
+    this.taskManagerService.loadUserAndTasks(0); // TODO: replace 1 with the logged-in user's ID
   }
 }
