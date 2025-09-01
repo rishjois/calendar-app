@@ -20,4 +20,8 @@ export class TaskManagerList {
       this.taskManagerService.addTask(title, deadline);
     }
   }
+
+  saveTasks() {
+    this.taskManagerService.saveTasks();
+  }
 }

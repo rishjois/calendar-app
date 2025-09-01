@@ -41,4 +41,13 @@ export class TaskListItem {
       this.taskManagerService.deleteTask(this.task().id);
     }
   }
+
+  addSubtask() {
+    const title = prompt('Subtask title');
+    if (title) {
+      const deadline = prompt('Subtask deadline (optional, YYYY-MM-DD)') || '';
+      this.taskManagerService.addSubtask(this.task().id, title, deadline);
+      this.expanded.set(true);
+    }
+  }
 }
