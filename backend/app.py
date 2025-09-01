@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from datetime import datetime
@@ -54,6 +55,7 @@ def build_task_tree(session, user_id):
     return roots
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/api/users/<int:user_id>", methods=["GET"])
 def get_user_and_tasks(user_id):
