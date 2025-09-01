@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Task } from '../models/TaskList';
 
 @Injectable({
@@ -7,9 +8,9 @@ import { Task } from '../models/TaskList';
 export class TaskManagerService {
   taskManagerItems = signal<Task[]>([]);
   private nextId = 1;
-  user: string = "";
+  user = signal<string>('');
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   updateItems(jsonValue: any) {
     const tasks = this.transformTaskJsonToTasks(jsonValue);
@@ -18,7 +19,26 @@ export class TaskManagerService {
   }
 
   updateUser(userInput: string) {
-    this.user = userInput;
+    this.user.set(userInput);
+  }
+
+  loadUserAndTasks(userId: number) {
+    this.http.get<any>(`http://localhost:5000/api/users/${userId}`).subscribe({
+      next: data => {
+        if (data?.user) {
+          const name = [data.user.first_name, data.user.last_name]
+            .filter(Boolean)
+            .join(' ');
+          this.user.set(name || data.user.username);
+        }
+        if (data?.tasks) {
+          this.updateItems({ tasks: data.tasks });
+        }
+      },
+      error: err => {
+        console.error('Failed to load tasks', err);
+      }
+    });
   }
 
   addTask(title: string, deadline: string = '') {

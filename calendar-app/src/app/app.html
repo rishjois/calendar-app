@@ -3,8 +3,7 @@
   <h1 class="app-header" routerLink="">{{ title }}</h1>
 
   <div class="split-container">
-    <app-sidebar-component [user]="user()" />
-    <!-- <app-task-manager-component [user]="user()" [taskData]="taskData()" /> -->
+    <app-sidebar-component />
      <app-task-manager-component>
         <router-outlet></router-outlet>
      </app-task-manager-component>

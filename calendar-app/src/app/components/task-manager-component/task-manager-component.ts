@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Task } from '../../models/TaskList';
 import { TaskManagerService } from '../../services/task-manager';
 import { TaskManagerList } from './task-manager-list/task-manager-list';
@@ -11,9 +11,10 @@ import { TaskManagerList } from './task-manager-list/task-manager-list';
   templateUrl: './task-manager-component.html',
   styleUrl: './task-manager-component.scss'
 })
-export class TaskManagerComponent implements OnInit {
+export class TaskManagerComponent {
 
-  user = signal<string>("");
+  taskManagerService = inject(TaskManagerService);
+  user = this.taskManagerService.user;
 
   firstName = computed(() => this.getPossessiveFirstName(this.user()));
 
@@ -32,12 +33,6 @@ export class TaskManagerComponent implements OnInit {
     const endsWithS = /s$/i.test(firstName);
 
     return endsWithS ? `${firstName}'` : `${firstName}'s`;
-  }
-
-  taskManagerService = inject(TaskManagerService);
-  
-  ngOnInit(): void {
-      this.user.set(this.taskManagerService.user);
   }
 
   /**

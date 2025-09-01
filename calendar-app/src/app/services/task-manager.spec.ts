@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { TaskManagerService } from './task-manager';
 
@@ -6,7 +7,9 @@ describe('TaskManagerService', () => {
   let service: TaskManagerService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(TaskManagerService);
   });
 

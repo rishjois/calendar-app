@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { TaskManagerComponent } from './task-manager-component';
 
@@ -8,7 +9,7 @@ describe('TaskManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskManagerComponent]
+      imports: [TaskManagerComponent, HttpClientTestingModule]
     })
     .compileComponents();
 
