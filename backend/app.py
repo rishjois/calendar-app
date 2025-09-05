@@ -1,6 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
+from datetime import datetime
 
 # TODO: replace placeholders with actual database credentials
 DATABASE_URL = "mysql+pymysql://root:test_root@localhost:3306/calendar"
@@ -53,6 +56,7 @@ def build_task_tree(session, user_id):
     return roots
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/api/users/<int:user_id>", methods=["GET"])
 def get_user_and_tasks(user_id):
@@ -72,6 +76,41 @@ def get_user_and_tasks(user_id):
         },
         "tasks": tasks
     })
+
+
+@app.route("/api/users/<int:user_id>/tasks", methods=["POST"])
+def save_tasks(user_id):
+    data = request.get_json(force=True)
+    tasks_data = data.get("tasks", [])
+
+    session = SessionLocal()
+    session.query(Task).filter_by(user_id=user_id).delete()
+    session.commit()
+
+    def persist(task_dict, parent_id=None):
+        deadline = task_dict.get("deadline")
+        deadline_date = (
+            datetime.fromisoformat(deadline).date() if deadline else None
+        )
+        task = Task(
+            user_id=user_id,
+            title=task_dict.get("title"),
+            deadline=deadline_date,
+            parent_id=parent_id,
+            completed=task_dict.get("completed", False),
+            deleted=False,
+        )
+        session.add(task)
+        session.flush()
+        for sub in task_dict.get("subtasks", []):
+            persist(sub, task.id)
+
+    for t in tasks_data:
+        persist(t)
+
+    session.commit()
+    session.close()
+    return jsonify({"status": "success"}), 201
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,4 +1,5 @@
 <button class="create-btn" type="button" (click)="addTask()">New Task</button>
+<button class="save-btn" type="button" (click)="saveTasks()">Save</button>
 <div class="task-list" role="tree" aria-label="Tasks">
     @for (t of taskData(); track t.id) {
       <app-task-list-item [task]="t" [depth]="0"></app-task-list-item>
